@@ -25,6 +25,15 @@ def report_printer(resources_left):
 
 def resource_checker(drink):
     """Checks and return boolean values if there's sufficient amount of resources available or not"""
+    if drink != "espresso":
+        if resources["milk"] < MENU[drink]["ingredients"]["milk"]:
+            return False
+    if resources["water"] < MENU[drink]["ingredients"]["water"]:
+        return False
+    elif resources["coffee"] < MENU[drink]["ingredients"]["coffee"]:
+        return False
+    else:
+        return True
 
 
 def coin_calculator(drink, total_money):
@@ -53,8 +62,13 @@ while resources["coffee"] > 5:
     if selection == "report":
         report_printer(resources)
     elif selection in MENU:
-        print("Please insert coins.")
-        money += coin_calculator(selection, money)
-        print(f"Here is your {selection} ☕️ Enjoy!")
+        if resource_checker(selection):
+            print("Please insert coins.")
+            money += coin_calculator(selection, money)
+            print(f"Here is your {selection} ☕️ Enjoy!")
+        else:
+            print("Sorry, no sufficient resources available.")
+            print("Please collect your coins.")
+            exit()
     else:
         print("Enter a valid input.")
