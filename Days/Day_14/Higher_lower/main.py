@@ -12,11 +12,11 @@ def printer(var, name):
 len_data = len(data)
 
 a = randint(0, len_data-1)
-b = randint(0, len_data-1)
+b = randint(0, len_data-1) 
 # Not to repeat the same persons
 while b == a:
     b = randint(0, len_data-1)
-
+   
 score = 0
 cont = True
 
