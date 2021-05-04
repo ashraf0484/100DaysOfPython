@@ -1,7 +1,4 @@
 from data import *
-from os import system
-
-system("clear")
 
 
 def resources_updater(drink):
