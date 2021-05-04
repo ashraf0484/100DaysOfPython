@@ -3,11 +3,13 @@ from art import logo, vs
 from random import choice, randint
 from os import system
 
+
 def printer(var, name):
     print(f"Compare {name}: ", end="")
     print(data[var]["name"], end=", a ")
     print(data[var]["description"], end=", from ")
     print(data[var]["country"], end=".")
+
 
 len_data = len(data)
 
@@ -20,7 +22,7 @@ while b == a:
 score = 0
 cont = True
 
-while cont :
+while cont:
 
     system("clear")
     print(logo)
