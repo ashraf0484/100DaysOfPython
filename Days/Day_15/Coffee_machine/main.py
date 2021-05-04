@@ -6,34 +6,44 @@ system("clear")
 
 def resources_updater(drink):
     """Updates the level of resources_left once a drink is made"""
-    if drink != "espresso":
-        resources["milk"] -= MENU[drink]["ingredients"]["milk"]
-    resources["water"] -= MENU[drink]["ingredients"]["water"]
-    resources["coffee"] -= MENU[drink]["ingredients"]["coffee"]
+    # if drink != "espresso":
+    #     resources["milk"] -= MENU[drink]["ingredients"]["milk"]
+    # resources["water"] -= MENU[drink]["ingredients"]["water"]
+    # resources["coffee"] -= MENU[drink]["ingredients"]["coffee"]
+
+    for item in MENU[drink]["ingredients"]:
+        resources[item] -= MENU[drink]["ingredients"][item]
 
 
 def report_printer(resources_left):
     """Prints the report for the remaining resources"""
-    water = resources_left["water"]
-    milk = resources_left["milk"]
-    coffee = resources_left["coffee"]
-    print(f"Water: {water}ml")
-    print(f"Milk: {milk}ml")
-    print(f"Coffee: {coffee}g")
+    print(f"Water: {resources_left['water']}ml")
+    print(f"Milk: {resources_left['milk']}ml")
+    print(f"Coffee: {resources_left['coffee']}g")
     print(f"Money: ${money}")
 
 
 def resource_checker(drink):
     """Checks and return boolean values if there's sufficient amount of resources available or not"""
-    if drink != "espresso":
-        if resources["milk"] < MENU[drink]["ingredients"]["milk"]:
+    # if drink != "espresso":
+    #     if resources["milk"] < MENU[drink]["ingredients"]["milk"]:
+    #         print("Sorry, there is no enough milk")
+    #         return False
+    # if resources["water"] < MENU[drink]["ingredients"]["water"]:
+    #     print("Sorry, there is no enough water")
+    #     return False
+    # elif resources["coffee"] < MENU[drink]["ingredients"]["coffee"]:
+    #     print("Sorry, there is no enough coffee")
+    #     return False
+    # else:
+    #     return True
+
+    for item in resources:
+        if resources[item] < MENU[drink]["ingredients"][item]:
+            print(f"Sorry, there is no enough {item}")
             return False
-    if resources["water"] < MENU[drink]["ingredients"]["water"]:
-        return False
-    elif resources["coffee"] < MENU[drink]["ingredients"]["coffee"]:
-        return False
-    else:
-        return True
+        else:
+            return True
 
 
 def coin_calculator(drink, total_money):
@@ -55,11 +65,13 @@ def coin_calculator(drink, total_money):
 
 
 money = 0
+machine_on = True
 
-while resources["coffee"] > 5:
+while machine_on:
     selection = input("What would you like? (espresso/latte/cappuccino)").lower()
-
-    if selection == "report":
+    if selection == "off":
+        machine_on = False
+    elif selection == "report":
         report_printer(resources)
     elif selection in MENU:
         if resource_checker(selection):
@@ -67,8 +79,6 @@ while resources["coffee"] > 5:
             money += coin_calculator(selection, money)
             print(f"Here is your {selection} ☕️ Enjoy!")
         else:
-            print("Sorry, no sufficient resources available.")
             print("Please collect your coins.")
-            exit()
     else:
         print("Enter a valid input.")
